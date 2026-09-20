@@ -107,6 +107,7 @@ app.put('/api/admin/settings', requireAuth, requireCsrf, requireRole('super_admi
   res.json({ ok: true });
 });
 app.get('/api/admin/activity', requireAuth, (req, res) => res.json({ activity: db.prepare('SELECT a.*, u.email FROM activity_logs a LEFT JOIN admin_users u ON u.id = a.user_id ORDER BY a.created_at DESC LIMIT 100').all() }));
+app.get('/api/admin/community', requireAuth, requireRole('super_admin', 'admin', 'content_manager', 'support_staff'), (req, res) => res.json({ modelApplications: db.prepare('SELECT m.id, m.full_name, m.phone, m.location, m.experience, m.portfolio_url, m.availability, m.status, m.created_at, c.email FROM model_applications m JOIN customers c ON c.id = m.customer_id ORDER BY m.created_at DESC').all(), jobApplications: db.prepare('SELECT j.id, j.full_name, j.phone, j.location, j.role, j.cover_letter, j.status, j.created_at, c.email FROM job_applications j JOIN customers c ON c.id = j.customer_id ORDER BY j.created_at DESC').all(), contactMessages: db.prepare('SELECT id, name, email, topic, message, status, created_at FROM contact_messages ORDER BY created_at DESC').all() }));
 
 app.use(express.static(__dirname, { index: 'index.html', dotfiles: 'deny', maxAge: production ? '1d' : 0 }));
 app.use((err, req, res, next) => { console.error(err); res.status(500).json({ error: 'Internal server error.' }); });
