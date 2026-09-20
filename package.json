@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npx serve . -l 4173"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0"
   }
 }
