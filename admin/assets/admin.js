@@ -1,4 +1,5 @@
 let csrf=sessionStorage.getItem('northstar_csrf')||'';let dashboard;let products=[];let categories=[];let orders=[];let customers=[];
+document.title='Admin dashboard | Mynuverse';document.querySelectorAll('.admin-logo').forEach(logo=>{const small=logo.querySelector('small');logo.innerHTML='<span>✳</span> MYNUVERSE';if(small)logo.appendChild(small)});
 document.head.insertAdjacentHTML('beforeend','<link rel="stylesheet" href="/admin/assets/proof.css">');
 document.querySelector('[data-setting="free_shipping_threshold"]')?.closest('label')?.remove();
 const $=selector=>document.querySelector(selector);const $$=selector=>document.querySelectorAll(selector);const money=value=>`৳${(Number(value||0)*100).toLocaleString('en-BD',{maximumFractionDigits:0})}`;const orderMoney=value=>`৳${Number(value||0).toLocaleString('en-BD',{maximumFractionDigits:0})}`;const date=value=>value?new Date(value).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';const toast=message=>{const node=$('#toast');node.textContent=message;node.classList.add('show');setTimeout(()=>node.classList.remove('show'),2500)};
